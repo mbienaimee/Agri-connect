@@ -1,12 +1,47 @@
-import React from 'react'
-import image4 from "../../public/image5.jpeg"
-
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import image4 from '../../public/image5.jpeg';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    axios
+      .post('http://localhost:3001/api/agri-sales/users/signIn', { email, password })
+      .then((response) => {
+        const { token, user:{role} } = response.data;
+        localStorage.setItem('token', token);
+        console.log(role);
+        if (role === 'farmer') {
+          navigate('/admin');
+        } else if (role === 'buyer') {
+          navigate('/home');
+        } else {
+          alert('Unknown role. Please contact support.');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('Invalid credentials. Please try again.');
+      });
+  };
+
   return (
     <div
-      className=" bg-cover bg-center h-screen p-64"
-      style={{ backgroundImage: "url('./image5.jpeg')" }}
+      className="bg-cover bg-center h-screen p-64"
+      style={{ backgroundImage: `url(${image4})` }}
     >
       <div className="mx-auto max-w-lg text-center">
         <h1 className="text-2xl font-bold sm:text-3xl animate-bounce duration-200">
@@ -14,23 +49,25 @@ const Login = () => {
         </h1>
       </div>
 
-      <form action="#" className="mx-auto mb-0 mt-8 max-w-md space-y-4">
+      <form onSubmit={handleLogin} className="mx-auto mb-0 mt-8 max-w-md space-y-4">
         <div>
           <label htmlFor="email" className="sr-only">
             Email
           </label>
-
           <div className="relative">
             <input
               type="email"
+              id="email"
               className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
               placeholder="Enter email"
+              value={email}
+              onChange={handleEmailChange}
+              required
             />
-
             <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="size-4 text-gray-400"
+                className="h-5 w-5 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -50,18 +87,20 @@ const Login = () => {
           <label htmlFor="password" className="sr-only">
             Password
           </label>
-
           <div className="relative">
             <input
               type="password"
+              id="password"
               className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
               placeholder="Enter password"
+              value={password}
+              onChange={handlePasswordChange}
+              required
             />
-
             <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="size-4 text-gray-400"
+                className="h-5 w-5 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -86,27 +125,25 @@ const Login = () => {
         <div className="flex items-center justify-between">
           <p className="text-sm text-white">
             No account?
-            <a className="underline" href="/Signup">
+            <a className="underline" href="/signup">
               Sign up
             </a>
           </p>
-
           <p className="text-sm text-white">
-            <a className="underline" href="/Forgot">
-              Forgot your password
+            <a className="underline" href="/forgot">
+              Forgot your password?
             </a>
           </p>
-
           <button
-            type="Login"
+            type="submit"
             className="inline-block rounded-lg bg-[#FF9C00] px-5 py-3 text-sm font-medium text-white"
           >
-            <a href="">Log in</a>
+            Log in
           </button>
         </div>
       </form>
     </div>
   );
-}
+};
 
-export default Login
+export default Login;

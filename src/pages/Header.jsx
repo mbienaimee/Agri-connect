@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { IoPerson } from "react-icons/io5";
 import { FaCartShopping } from "react-icons/fa6";
 import { FiMenu } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const Menu = ({ isOpen, toggleMenu }) => {
   return (
@@ -12,36 +13,36 @@ const Menu = ({ isOpen, toggleMenu }) => {
       }`}
     >
       <li className="flex justify-center w-full border-b border-gray-300">
-        <a href="/" className="flex items-center py-2 px-4 ">
+        <Link to="/" className="flex items-center py-2 px-4 ">
           Home
-        </a>
+        </Link>
       </li>
       <li className="flex justify-center w-full border-b border-gray-300">
-        <a href="/AboutUs" className=" flex items-center py-2 px-4 ">
+        <Link to="/AboutUs" className=" flex items-center py-2 px-4 ">
           About Us
-        </a>
+        </Link>
       </li>
 
       <li className="flex justify-center w-full border-b border-gray-300">
-        <a href="/Shop" className="flex items-center py-2 px-4">
+        <Link to="/Shop" className="flex items-center py-2 px-4">
           Shop
-        </a>
+        </Link>
       </li>
       <li className="flex justify-center w-full border-b border-gray-300">
-        <a href="/Contact" className="flex items-center py-2 px-4">
+        <Link to="/Contact" className="flex items-center py-2 px-4">
           Contact Us
-        </a>
+        </Link>
       </li>
 
       <li className="flex justify-center w-full border-b border-gray-300">
-        <a href="/Product" className="flex items-center py-2 px-4">
+        <Link to="/Product" className="flex items-center py-2 px-4">
           {<IoPerson className="w-[20px]" />}
-        </a>
+        </Link>
       </li>
       <li className="flex justify-center w-full border-b border-gray-300">
-        <a href="/Cart" className="flex items-center py-2 px-4">
+        <Link to="/Cart" className="flex items-center py-2 px-4">
           {<FaCartShopping className="w-[20px]" />}
-        </a>
+        </Link>
       </li>
 
       <li>
@@ -49,9 +50,9 @@ const Menu = ({ isOpen, toggleMenu }) => {
           className="md:flex  py-2 px-2 bg-[#45AB49] text-white font-medium rounded"
           onClick={toggleMenu}
         >
-          <a href="/Login" className="flex items-center px-4 py-2">
+          <Link to="/Login" className="flex items-center px-4 py-2">
             Login
-          </a>
+          </Link>
         </button>
       </li>
     </ul>
@@ -74,54 +75,54 @@ const Header = () => {
 
         <ul className="hidden md:flex space-x-4 items-center">
           <li>
-            <a
-              href="/"
+            <Link
+              to="/"
               className="flex items-center py-2 px-4 hover:text-[#45ab49]"
             >
               Home
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="/AboutUs"
+            <Link
+              to="/AboutUs"
               className=" flex items-center py-2 px-4 hover:text-[#45ab49]"
             >
               About Us
-            </a>
+            </Link>
           </li>
 
           <li>
-            <a
-              href="/Shop"
+            <Link
+              to="/Shop"
               className="flex items-center py-2 px-4 hover:text-[#45ab49]"
             >
               Shop
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="/Contact"
+            <Link
+              to="/Contact"
               className="flex items-center py-2 px-4 hover:text-[#45ab49]"
             >
               Contact Us
-            </a>
+            </Link>
           </li>
 
           <li>
-            <a
-              href="/Product"
+            <Link
+              to="/Product"
               className="flex items-center py-2 px-4 hover:text-[#45ab49]"
             >
               {<IoPerson className="w-[20px]" />}
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="/Cart"
+            <Link
+              to="/Cart"
               className="flex items-center py-2 px-4 hover:text-[#45ab49]"
             >
               {<FaCartShopping className="w-[20px]" />}
-            </a>
+            </Link>
           </li>
 
           <li>
@@ -129,9 +130,9 @@ const Header = () => {
               className="md:flex  py-2 px-2 bg-[#45AB49] text-white font-medium rounded "
               onClick={toggleMenu}
             >
-              <a href="/Login" className="flex items-center px-4 py-1">
+              <Link to="/Login" className="flex items-center px-4 py-1">
                 Login
-              </a>
+              </Link>
             </button>
           </li>
         </ul>

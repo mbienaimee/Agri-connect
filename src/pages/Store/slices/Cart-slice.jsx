@@ -12,7 +12,8 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action) {
       console.log(action);
-      state.push(action.payload);
+      //  state.push(action.payload);
+       return [...state, action.payload]
     },
     removeFromCart(state, action) {
       return state.filter((item) => item.id !== action.payload);

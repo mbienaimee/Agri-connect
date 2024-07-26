@@ -1,12 +1,46 @@
-
+import Password from "antd/es/input/Password";
+import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
 
-  const [selectedOption, setSelectedOption] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+const [selectedOption, setSelectedOption] = useState("");
+  const navigate = useNavigate();
 const handleChange = (event) => {
   setSelectedOption(event.target.value);
 };
+const handlename = (event) => {
+  setFullName(event.target.value);
+};
+const handleemail = (event) => {
+  setEmail(event.target.value);
+};
+const handlepassword = (event) => {
+  setPassword(event.target.value);
+};
+const fetching = ()=>{
+  axios.post('http://localhost:3001/api/agri-sales/users/signUp', {
+    fullName: fullName,
+    email: email,
+    password: password,
+    role: selectedOption
+  })
+   .then(response => {
+     console.log(fullName,email,password);
+     navigate('/Otpinput');
+   })
+   .catch(error => {
+     console.log(error);
+   });
+}
+  // useEffect(() => {
+  //   fetching();
+  // }, [fullName, email, password, selectedOption]);
+
 
   return (
     <div>
@@ -23,6 +57,7 @@ const handleChange = (event) => {
             <form
               action="#"
               className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
+              onSubmit={fetching}
             >
               <div>
                 <label htmlFor="password" className="sr-only">
@@ -31,6 +66,7 @@ const handleChange = (event) => {
 
                 <div className="relative">
                   <input
+                   onChange={handlename}
                     type="Full names"
                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                     placeholder="Your Full names"
@@ -68,6 +104,7 @@ const handleChange = (event) => {
 
                 <div className="relative">
                   <input
+                   onChange={handleemail}
                     type="email"
                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                     placeholder="Enter email"
@@ -99,6 +136,7 @@ const handleChange = (event) => {
 
                 <div className="relative">
                   <input
+                   onChange={handlepassword}
                     type="password"
                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                     placeholder="Enter password"

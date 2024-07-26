@@ -9,7 +9,7 @@ const Products = () => {
     const FetchingData = async()=>{
         await axios({
             method: "GET",
-            url: 'https://agri-sales-backend-7.onrender.com/api/agri-sales/products/productList'
+            url: 'http://localhost:3001/api/agri-sales/products/productList'
         })
         .then((response)=>{
             console.log(response.data.getProduct);
@@ -28,7 +28,7 @@ const Products = () => {
 
         const updatedProduct = products;
         try{
-          const response = await axios.put(`https://agri-sales-backend-7.onrender.com/api/agri-sales/products/update/${products.id}`)
+          const response = await axios.put(`http://localhost:3001/api/agri-sales/products/updateProduct/${products.id}`)
         }catch(error){
 
         }

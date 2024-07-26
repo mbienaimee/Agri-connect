@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const OtpInput = () => {
   const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -24,8 +26,24 @@ const OtpInput = () => {
   };
 
   const onOtpSubmit = () => {
-    alert("OTP Submitted: " + otp.join(""));
+    alert("OTP Submitted successfully");
   };
+  const fetching = () => {
+    axios
+     .get(
+        "http://localhost:3001/api/agri-sales/users/verify" +
+          otp.join("")
+      )
+     .then((response) => {
+        if (response.status === 200) {
+          alert("OTP verified successfully!");
+          navigate("/login");
+        }
+      })
+     .catch((error) => {
+        console.log("Error in verifying OTP: ", error);
+      });
+  }
 
   return (
     <div className="mx-auto flex flex-col items-center justify-center bg-white-100">
