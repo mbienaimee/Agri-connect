@@ -39,7 +39,7 @@ const AddProduct = () => {
   const handleSubmitProduct = async(event)=>{
     event.preventDefault();
     try{
-      const response = await axios.post("https://agri-sales-backend-7.onrender.com/api/agri-sales/products/addProduct",{
+      const response = await axios.post("http://localhost:3001/api/agri-sales/products/addProduct",{
       file,
       productName,
       description,

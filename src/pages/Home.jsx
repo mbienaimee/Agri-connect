@@ -15,7 +15,7 @@ const Home = () => {
   const rating = 5;
   return (
     <div>
-      <div className="bg-[url('slider-01.jpg')] bg-cover w-full h-[96vh] flex flex-col justify-center pl-4 sm:pl-20 gap-10 mb-16">
+      <div className="bg-[url('/slider-01.jpg')] bg-cover w-full h-[96vh] flex flex-col justify-center pl-4 sm:pl-20 gap-10 mb-16">
         <h2 className="text-3xl sm:text-2xl font-semibold text-[#FF9C00]">
           Welcome to AGRIsales
         </h2>
