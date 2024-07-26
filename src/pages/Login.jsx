@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import image4 from '../../public/image5.jpeg';
 
 const Login = () => {
@@ -125,14 +125,14 @@ const Login = () => {
         <div className="flex items-center justify-between">
           <p className="text-sm text-white">
             No account?
-            <a className="underline" href="/signup">
+           <Link className="underline" href="/signup">
               Sign up
-            </a>
+           </Link>
           </p>
           <p className="text-sm text-white">
-            <a className="underline" href="/forgot">
+           <Link className="underline" href="/forgot">
               Forgot your password?
-            </a>
+           </Link>
           </p>
           <button
             type="submit"
