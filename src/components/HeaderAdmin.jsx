@@ -3,8 +3,18 @@ import { FaSearch, FaRegBell } from "react-icons/fa";
 import { Popover, PopoverButton } from "@headlessui/react";
 import { Menu, MenuButton } from "@headlessui/react";
 
+import { useNavigate } from "react-router-dom";
 const HeaderAdmin = () => {
   const profile = "lolo.png";
+
+  const navigate = useNavigate();
+
+  function clickNofication(){
+
+    navigate("/Messages");
+    
+  }
+  
   return (
     <div className="bg-white h-16 w-full flex justify-between px-4 border-b border-gray-200">
       <div className="relative">
@@ -22,7 +32,7 @@ const HeaderAdmin = () => {
         <Popover className="relative flex">
           {({ open }) => (
             <>
-              <PopoverButton className="inline-flex items-center rounded-md hover:bg-gray-200 px-3 py-2 text-base font-medium hover:text-opacity-100 focus:outline-none">
+              <PopoverButton className="inline-flex items-center rounded-md hover:bg-gray-200 px-3 py-2 text-base font-medium hover:text-opacity-100 focus:outline-none"   onClick={clickNofication}>
                 <AiOutlineMessage fontSize={24} />
               </PopoverButton>
 

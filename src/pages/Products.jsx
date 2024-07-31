@@ -4,39 +4,40 @@ import axios from "axios";
 import { MdEdit, MdDelete } from "react-icons/md";
 
 const Products = () => {
-    const [products, setProduct] = useState([]);
-    let index = 1;
-    const FetchingData = async()=>{
-        await axios({
-            method: "GET",
-            url: 'http://localhost:3001/api/agri-sales/products/productList'
-        })
-        .then((response)=>{
-            console.log(response.data.getProduct);
-            setProduct(response.data.getProduct);
-        })
-        .catch((error)=>{
-            console.log(error)
-        })
+  const [products, setProducts] = useState([]);
+  let index = 1;
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/api/agri-sales/products/productList');
+      setProducts(response.data.getProduct);
+    } catch (error) {
+      console.log(error);
     }
-    useEffect(()=>{
-        FetchingData();
-    },[])
+  };
 
-    const HandleUpdate = async(e)=>{
-        e.preventDefault();
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-        const updatedProduct = products;
-        try{
-          const response = await axios.put(`http://localhost:3001/api/agri-sales/products/updateProduct/${products.id}`)
-        }catch(error){
-
-        }
-        
+  const handleUpdate = async (productId) => {
+    try {
+      await axios.put(`http://localhost:3001/api/agri-sales/products/updateProduct/${productId}`);
+      fetchData(); // Optionally refetch data to update the UI
+    } catch (error) {
+      console.log(error);
     }
-    const handleDelete = (id) => {
-      console.log(id);
-    };
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3001/api/agri-sales/products/delete/${id}`);
+      fetchData(); // Refetch data to update the UI after deletion
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <div className="flex justify-between py-6 text-lg">
@@ -49,23 +50,22 @@ const Products = () => {
         </Link>
       </div>
       <div className="mt-3">
-        <table className=" w-full text-gray-700 h-[50vh]">
+        <table className="w-full text-gray-700 h-[50vh]">
           <thead className="bg-black text-white border-2">
             <tr className="p-9">
-              <td>Produdt Id</td>
+              <td>Product Id</td>
               <td>Product Name</td>
               <td>Price</td>
               <td>Category</td>
               <td>Actions</td>
             </tr>
           </thead>
-
           <tbody className="border-2">
             {products.map((product) => (
-              <tr key={index} className=" p-9 border">
+              <tr key={product._id} className="p-9 border">
                 <td>
                   <Link
-                    to={`/products/${product.id}`}
+                    to={`/products/${product._id}`}
                     className="font-semibold text-xl"
                   >
                     {index++}
@@ -79,13 +79,11 @@ const Products = () => {
                 <td>{product.price}</td>
                 <td>{product.category}</td>
                 <td className="flex">
-                  <Link to={`/update/:id`}>
+                  <Link to={`/update/${product._id}`}>
                     <MdEdit fontSize={26} className="text-[blue]" />
                   </Link>
-                  <span>
-                    <Link onClick={() => handleDelete(product.id)}>
-                      <MdDelete fontSize={25} className="text-[red]" />
-                    </Link>
+                  <span onClick={() => handleDelete(product._id)}>
+                    <MdDelete fontSize={25} className="text-[red]" />
                   </span>
                 </td>
               </tr>

@@ -1,14 +1,15 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import Footer from "../pages/Footer.jsx";
-import { IoPerson } from "react-icons/io5";
-import { Link, NavLink } from "react-router-dom";
 import { GrLocation } from "react-icons/gr";
 import { MdOutlinePhonelinkRing } from "react-icons/md";
 import { MdMarkEmailRead } from "react-icons/md";
+import axios from "axios";
 
 const Contact = () => {
   const form = useRef();
+  const [messages, setMessages] = useState([]);
+  const [emailSent, setEmailSent] = useState(false);
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -28,7 +29,8 @@ const Contact = () => {
       .then(
         () => {
           console.log("SUCCESS!");
-          alert("Success!");
+          setEmailSent(true);
+          setTimeout(() => setEmailSent(false), 5000); // hide after 5 seconds
         },
         (error) => {
           console.log("FAILED...", error.text);
@@ -39,17 +41,32 @@ const Contact = () => {
       });
   };
 
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3001/api/agri-sales/messages/Addmessages"
+        );
+        setMessages(response.data);
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      }
+    };
+
+    fetchMessages();
+  }, []);
+
   return (
     <div>
       <h1 className="text-[#FF9C00] font-bold my-3 ml-[45rem] -mb-[3rem] text-2xl">
         Contact <span className="animate-pulse ">📞</span> us
       </h1>
-      <div className="w-3/4 mx-auto my-[5rem]  mb-[4rem] flex justify-center">
+      <div className="w-3/4 mx-auto my-[5rem] mb-[4rem] flex justify-center">
         <div
           style={{ backgroundImage: "url('./contact.jpg')" }}
-          className="flex flex-col justify-center w-[38rem]  object-cover bg-no-repeat rounded-lg ml-[2rem]"
+          className="flex flex-col justify-center w-[38rem] object-cover bg-no-repeat rounded-lg ml-[2rem]"
         >
-          <div className="flex  gap-4 p-4">
+          <div className="flex gap-4 p-4">
             <div className="ml-[3rem]">
               <GrLocation />
             </div>
@@ -85,9 +102,9 @@ const Contact = () => {
           <form
             ref={form}
             onSubmit={sendEmail}
-            className="flex rounded-lg flex-col  border-2 border-gray-300 w-[4orem] p-24"
+            className="flex rounded-lg flex-col border-2 border-gray-300 w-[4orem] p-24"
           >
-            <label className="mb-2 ">Name</label>
+            <label className="mb-2">Name</label>
             <input
               type="text"
               name="from_name"
@@ -110,12 +127,35 @@ const Contact = () => {
               required
               className="border border-gray-300 p-2 rounded mb-4"
             />
-            <button className="bg-green-500 p-2   flex justify-center text-white rounded">
-              <input type="submit" value="Send" />
+            <button
+              type="submit"
+              className="bg-green-500 p-2 flex justify-center text-white rounded"
+            >
+              Send
             </button>
+            {emailSent && (
+              <p className="text-green-500 mt-4">Message sent successfully!</p>
+            )}
           </form>
         </div>
       </div>
+
+      <div className="w-3/4 mx-auto my-8">
+        <h2 className="text-2xl font-bold mb-4">Messages</h2>
+        {messages.length > 0 ? (
+          messages.map((message) => (
+            <div key={message.id} className="border p-4 mb-4 rounded">
+              <h3 className="font-bold">{message.from_name}</h3>
+              <p>{message.message}</p>
+              <p className="text-gray-600">{message.from_email}</p>
+            </div>
+          ))
+        ) : (
+          <p>No messages found.</p>
+        )}
+      </div>
+
+      <Footer />
     </div>
   );
 };

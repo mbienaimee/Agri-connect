@@ -20,6 +20,9 @@ import Update from "./pages/Update";
 import Delete from "./pages/Delete";
 import AdminLayout from "./pages/AdminLayout";
 import AddProduct from "./pages/AddProduct"
+import Messages from "./pages/Messages";
+import Clients from "./pages/Clients";
+import Orders from "./pages/Order";
 
 
 function App() {
@@ -43,13 +46,21 @@ function App() {
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/Footer" element={<Footer />} />
             <Route path="/shop" element={<Shop />} />
+        
+          
           </Route>
           <Route element={<AdminLayout/>}>
             <Route path="/admin" element={<Admin />} />
             <Route path="/products" element={<Products />} />
             <Route path="/update/:id" element={<Update />} />
             <Route path="/delete/:id" element={<Delete />} />
+          
             <Route path="/addproduct" element={<AddProduct/>}/>
+            <Route path="/Messages" element={<Messages />} />
+            <Route path="/Clients" element={<Clients/>} />
+            <Route path="/order" element={<Orders />} />
+
+
           </Route>
         </Routes>
       </Router>

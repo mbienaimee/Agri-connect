@@ -30,7 +30,7 @@ const OtpInput = () => {
   };
   const fetching = () => {
     axios
-     .get(
+     .post(
         "http://localhost:3001/api/agri-sales/users/verify" +
           otp.join("")
       )

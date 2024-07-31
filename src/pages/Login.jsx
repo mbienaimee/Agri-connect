@@ -21,19 +21,19 @@ const Login = () => {
     axios
       .post('http://localhost:3001/api/agri-sales/users/signIn', { email, password })
       .then((response) => {
-        const { token, user:{role} } = response.data;
+        const { token, user: { role } } = response.data;
         localStorage.setItem('token', token);
         console.log(role);
-        if (role === 'farmer') {
+        if (role === 'Farmer') {
           navigate('/admin');
-        } else if (role === 'buyer') {
-          navigate('/home');
+        } else if (role === 'Buyer') {
+          navigate('/Product');
         } else {
           alert('Unknown role. Please contact support.');
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         alert('Invalid credentials. Please try again.');
       });
   };
@@ -125,14 +125,14 @@ const Login = () => {
         <div className="flex items-center justify-between">
           <p className="text-sm text-white">
             No account?
-           <Link className="underline" href="/signup">
+            <Link className="underline" to="/Signup">
               Sign up
-           </Link>
+            </Link>
           </p>
           <p className="text-sm text-white">
-           <Link className="underline" href="/forgot">
+            <Link className="underline" to="/Forgot">
               Forgot your password?
-           </Link>
+            </Link>
           </p>
           <button
             type="submit"
